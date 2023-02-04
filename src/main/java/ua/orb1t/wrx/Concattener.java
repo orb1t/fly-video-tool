@@ -31,6 +31,7 @@ public class Concattener
                                         UrlInput.fromUrl( partPath )
                                                 .setDuration ( Config.outputDurationMillisec, TimeUnit.MILLISECONDS)
                                 );
+                                //.addArguments("-crf", "0");
                         ttlParts++;
                         System.out.println( "#" + ttlParts + " @ path = " + partPath );
                     }
@@ -65,11 +66,30 @@ public class Concattener
                 System.out.println("Directory Created -> "+ videoOutDirPath.getAbsolutePath());
             }
 
-            String outName = Config.videoOutDir + Config.outFilename + Config.extension;
+//            String outName = Config.videoOutDir + Config.outFilename + Config.extension;
+            String outName = videoOutDirPath + "\\" + Config.outFilename + Config.extension;
             System.out.println("outName = " + outName);
             ffmpeg.addOutput(
                             UrlOutput.toPath(FileSystems.getDefault().getPath( outName ))
+                                    .setFrameRate(30)
+//                                    .addArguments("-maxrate", "1M")
+//                                    .addArguments("-minrate", "1M")
+//                                    .addArguments("-ac", "1")
+//                                    .addArguments("-ar", Integer.toString(15000))
+//                                    .setFrameSize ( 800, 600 )
                     )
+//                    .addArguments("-ac", "1")
+//                    .addArguments("-ar", Integer.toString(15000))
+
+                    .addArguments("-b", "12000k")
+                    .addArguments("-maxrate", "12000k")
+                    .addArguments("-minrate", "12000k")
+                    .addArguments("-bufsize", "12000k")
+//                    .addArguments("-crf", "26")
+////                    .addArguments("-ar", Integer.toString(15000))
+////                    .addArguments("-crf", "0")
+//                    .addArguments("-maxrate", "1M")
+//                    .addArguments("-minrate", "1M")
                     .setOverwriteOutput(true)
                     .execute();
         }

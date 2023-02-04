@@ -80,7 +80,20 @@ public class Splinter
             .addOutput(
                     UrlOutput.toPath(FileSystems.getDefault().getPath( videoPartName ))
                     .setPosition(0, TimeUnit.MILLISECONDS)
+                            .setFrameRate(30)
+//                            .addArguments("-ac", "1")
+//                            .addArguments("-ar", Integer.toString(15000))
+//                            .setFrameSize ( 320, 200 )
                     )
+//            .addArguments("-crf", "0")
+//                    .addArguments("-ac", "1")
+//                    .addArguments("-ar", Integer.toString(15000))
+
+                    .addArguments("-b", "12000k")
+                    .addArguments("-maxrate", "12000k")
+                    .addArguments("-minrate", "12000k")
+                    .addArguments("-bufsize", "12000k")
+//                    .addArguments("-crf", "26")
             .setOverwriteOutput(true)
             .execute();
 
